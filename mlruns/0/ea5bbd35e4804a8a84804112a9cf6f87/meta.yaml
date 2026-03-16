@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/divya/OneDrive/Desktop/MLflow/mlruns/0/ea5bbd35e4804a8a84804112a9cf6f87/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ea5bbd35e4804a8a84804112a9cf6f87
+run_name: defiant-bass-840
+run_uuid: ea5bbd35e4804a8a84804112a9cf6f87
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1773669120067
+status: 1
+tags: []
+user_id: divya
