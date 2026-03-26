@@ -1,84 +1,59 @@
 import warnings
-import os
 import numpy as np
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.linear_model import ElasticNet, LinearRegression, Ridge, Lasso
+from sklearn.linear_model import ElasticNet
+
+import dagshub
 import mlflow
 import mlflow.sklearn
-import dagshub
 
 warnings.filterwarnings("ignore")
 np.random.seed(40)
 
-# -------------------------------
-# DagsHub + MLflow setup
-# -------------------------------
-dagshub.init(repo_owner="divyasreevemula918", repo_name="mlflowexperiments", mlflow=True)
+dagshub.init(
+    repo_owner="divyasreevemula918",
+    repo_name="mlflowexperiments",
+    mlflow=True
+)
 
-# Optional: set experiment name
-mlflow.set_experiment("Wine_Quality_Experiments")
+data_url = "https://raw.githubusercontent.com/mlflow/mlflow/master/tests/datasets/winequality-red.csv"
+df = pd.read_csv(data_url, sep=";")
 
-def eval_metrics(actual, pred):
-    rmse = np.sqrt(mean_squared_error(actual, pred))
-    mae = mean_absolute_error(actual, pred)
-    r2 = r2_score(actual, pred)
-    return rmse, mae, r2
+X = df.drop("quality", axis=1)
+y = df["quality"]
 
-# -------------------------------
-# Load dataset
-# -------------------------------
-url = "https://raw.githubusercontent.com/mlflow/mlflow/master/tests/datasets/winequality-red.csv"
-data = pd.read_csv(url, sep=";")
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-train, test = train_test_split(data, test_size=0.2, random_state=42)
+alpha = 0.5
+l1_ratio = 0.5
 
-train_x = train.drop(["quality"], axis=1)
-test_x = test.drop(["quality"], axis=1)
-train_y = train["quality"]
-test_y = test["quality"]
+with mlflow.start_run():
+    model = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
+    model.fit(X_train, y_train)
 
-# -------------------------------
-# Models to compare
-# -------------------------------
-models = {
-    "ElasticNet": ElasticNet(alpha=0.5, l1_ratio=0.5, random_state=42),
-    "LinearRegression": LinearRegression(),
-    "Ridge": Ridge(alpha=0.5),
-    "Lasso": Lasso(alpha=0.01)
-}
+    y_pred = model.predict(X_test)
 
-# -------------------------------
-# Run experiments
-# -------------------------------
-for model_name, model in models.items():
-    if mlflow.active_run():
-        mlflow.end_run()
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    mae = mean_absolute_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
 
-    with mlflow.start_run(run_name=model_name):
-        model.fit(train_x, train_y)
-        predicted_qualities = model.predict(test_x)
+    print(f"RMSE: {rmse:.4f}")
+    print(f"MAE: {mae:.4f}")
+    print(f"R2: {r2:.4f}")
 
-        rmse, mae, r2 = eval_metrics(test_y, predicted_qualities)
+    mlflow.log_param("model_name", "ElasticNet")
+    mlflow.log_param("alpha", alpha)
+    mlflow.log_param("l1_ratio", l1_ratio)
 
-        mlflow.log_param("model_name", model_name)
+    mlflow.log_metric("rmse", rmse)
+    mlflow.log_metric("mae", mae)
+    mlflow.log_metric("r2", r2)
 
-        if hasattr(model, "alpha"):
-            mlflow.log_param("alpha", model.alpha)
+    mlflow.sklearn.log_model(model, "model")
 
-        if hasattr(model, "l1_ratio"):
-            mlflow.log_param("l1_ratio", model.l1_ratio)
-
-        mlflow.log_metric("rmse", rmse)
-        mlflow.log_metric("mae", mae)
-        mlflow.log_metric("r2_score", r2)
-
-        # Save model artifact to DagsHub MLflow tracking
-        mlflow.sklearn.log_model(model, artifact_path=model_name.lower())
-
-        print(f"{model_name}")
-        print(f"  RMSE: {rmse:.4f}")
-        print(f"  MAE: {mae:.4f}")
-        print(f"  R2: {r2:.4f}")
-        print("-" * 40)
+print("MLflow run completed successfully!")
