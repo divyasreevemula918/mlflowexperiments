@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import mlflow
-import mlflow.sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet, LinearRegression, Ridge, Lasso
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -76,8 +75,6 @@ if st.button("Train Model"):
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("mae", mae)
         mlflow.log_metric("r2_score", r2)
-
-        mlflow.sklearn.log_model(model, "model")
 
     st.success(f"{model_name} trained successfully 🎉")
     st.write(f"**RMSE:** {rmse:.4f}")
