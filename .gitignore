@@ -36,3 +36,4 @@ dist/
 *.csv
 *.tmp
 *.env
+mlruns/
