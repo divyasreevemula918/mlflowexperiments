@@ -1,99 +1,139 @@
-<<<<<<< HEAD
-# 🍷 MLflow Wine Quality App
-
-An interactive **Streamlit + MLflow** project for training and comparing regression models on the **Wine Quality** dataset.  
-This app lets users choose a model, adjust hyperparameters, train it, and view evaluation metrics in a simple UI.
-
----
-
-## 🚀 Live Demo
-
-🔗 **Deployment Link:**  
-👉 https://mlflowexperiments-i6fssqfvpnqkdx3gxxkbue.streamlit.app/
-
----
+# 🚀 MLflow Experiment Tracking with DagsHub
 
 ## 📌 Project Overview
 
-This project demonstrates how to:
+This project demonstrates how to build a Machine Learning pipeline using **ElasticNet Regression** and track experiments using **MLflow integrated with DagsHub**.
 
-- Build a regression-based machine learning workflow
-- Compare multiple regression models
-- Use **Streamlit** for an interactive web interface
-- Use **MLflow** for experiment tracking
-- Log model parameters and evaluation metrics
-- Create a deployment-ready ML project
+It helps in logging:
 
-The dataset used in this project is the **Red Wine Quality** dataset.
+* Model parameters ⚙️
+* Performance metrics 📊
+* Trained models 💾
 
 ---
 
-## ✨ Features
+## ⚙️ Tech Stack
 
-- Interactive Streamlit web app 🌐
-- Train and compare multiple regression models
-- Adjustable hyperparameters using sliders
-- Real-time evaluation results
-- MLflow experiment logging
-- Clean UI for user-friendly interaction
-
----
-
-## 🧠 Models Used
-
-This project compares the following regression models:
-
-- ElasticNet
-- Linear Regression
-- Ridge Regression
-- Lasso Regression
+* 🐍 Python
+* 📊 Scikit-learn
+* 📈 MLflow
+* 🌐 DagsHub
+* 🧮 NumPy, Pandas
 
 ---
-
-## 📊 Metrics Used
-
-The app evaluates models using:
-
-- **RMSE** — Root Mean Squared Error
-- **MAE** — Mean Absolute Error
-- **R² Score** — Coefficient of Determination
-
-These metrics help measure model performance for wine quality prediction.
-
----
-
-## 🛠️ Tech Stack
-
-- Python
-- Streamlit
-- MLflow
-- Scikit-learn
-- Pandas
-- NumPy
-
----
-## screenshots
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/38bed20c-bd9f-4d50-b46f-6991237e4734" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f9572c53-2aa1-46db-ab3b-fd20020f7074" />
-
-
 
 ## 📂 Project Structure
 
+```
+MLflow/
+│── train_models.py       # Model training + MLflow logging
+│── app.py                # (Optional Streamlit app)
+│── requirements.txt      # Dependencies
+│── runtime.txt           # Python version
+│── .gitignore
+│── README.md
+```
+
+---
+
+## 🧠 Model Used
+
+* **ElasticNet Regression**
+
+  * Combines L1 (Lasso) + L2 (Ridge) regularization
+
+---
+
+## 📊 Metrics Logged
+
+The following metrics are tracked using MLflow:
+
+* RMSE (Root Mean Squared Error)
+* MAE (Mean Absolute Error)
+* R2 Score
+
+---
+
+## 🔗 Project Links
+
+* 💻 GitHub Repository:
+  https://github.com/divyasreevemula918/mlflowexperiments
+
+* 📊 DagsHub Experiments:
+https://dagshub.com/divyasreevemula918/mlflowexperiments/experiments
+* streamlit app:
+  
+
+---
+
+## ▶️ How to Run the Project
+
+### 1️⃣ Clone the repository
+
 ```bash
-mlflowexperiments/
-│
-├── app.py                # Streamlit app for training and comparing models
-├── train_models.py       # Separate MLflow experiment script
-├── requirements.txt      # Project dependencies
-├── runtime.txt           # Python runtime version for deployment
-├── dockerfile            # Docker support
-├── .gitignore            # Ignored files/folders
-└── README.md             # Project documentation
-=======
-##MLflow experiment
-MLFLOW_TRACKING_URI=https://dagshub.com/divyasreevemula918/mlflowexperiments.mlflow\
-MLFLOW_TRACKING_USERNAME=divyasreevemula918\
-MLFLOW_TRACKING_PASSWORD=5e6d9237c72e8605e5a73a914b27c7a28d617386\
-python script.py
->>>>>>> 7d21fe7 (Added MLflow with DagsHub integration)
+git clone https://github.com/divyasreevemula918/mlflowexperiments.git
+cd mlflowexperiments
+```
+
+### 2️⃣ Create virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Run training script
+
+```bash
+python train_models.py
+```
+
+---
+
+## 🔥 MLflow + DagsHub Integration
+
+This project uses:
+
+```python
+import dagshub
+dagshub.init(repo_owner="divyasreevemula918", repo_name="mlflowexperiments", mlflow=True)
+```
+
+This automatically connects MLflow with DagsHub and logs experiments online.
+
+---
+
+## 📈 Output Example
+
+After running the script, you will see:
+
+```
+RMSE: 0.7628  
+MAE: 0.6189  
+R2: 0.1096  
+```
+
+And all results will be available on DagsHub Experiments page.
+
+---
+
+## 📸 Screenshot (Optional)
+
+👉 Add your DagsHub experiment screenshot here
+
+```
+![DagsHub Experiments](your_screenshot.png)
+```
+
+---
+
+## 🚀 Future Improvements
+
+* Add multiple models (Linear Regression, Random Forest)
+* Hyperparameter
