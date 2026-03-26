@@ -5,6 +5,13 @@ import mlflow
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet, LinearRegression, Ridge, Lasso
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("MLFLOW_TRACKING_USERNAME")
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("MLFLOW_TRACKING_PASSWORD")
 
 st.set_page_config(page_title="MLflow Wine Quality App", page_icon="🍷")
 

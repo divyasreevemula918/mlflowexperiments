@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🍷 MLflow Wine Quality App
 
 An interactive **Streamlit + MLflow** project for training and comparing regression models on the **Wine Quality** dataset.  
@@ -89,3 +90,10 @@ mlflowexperiments/
 ├── dockerfile            # Docker support
 ├── .gitignore            # Ignored files/folders
 └── README.md             # Project documentation
+=======
+##MLflow experiment
+MLFLOW_TRACKING_URI=https://dagshub.com/divyasreevemula918/mlflowexperiments.mlflow\
+MLFLOW_TRACKING_USERNAME=divyasreevemula918\
+MLFLOW_TRACKING_PASSWORD=5e6d9237c72e8605e5a73a914b27c7a28d617386\
+python script.py
+>>>>>>> 7d21fe7 (Added MLflow with DagsHub integration)
