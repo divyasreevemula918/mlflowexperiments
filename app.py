@@ -6,12 +6,18 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet, LinearRegression, Ridge, Lasso
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
 
-os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("MLFLOW_TRACKING_USERNAME")
-os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("MLFLOW_TRACKING_PASSWORD")
+username = os.getenv("MLFLOW_TRACKING_USERNAME")
+password = os.getenv("MLFLOW_TRACKING_PASSWORD")
+
+if username:
+    os.environ["MLFLOW_TRACKING_USERNAME"] = "divyasreevemula918"
+if password:
+    os.environ["MLFLOW_TRACKING_PASSWORD"] = "1610479910561e70e71da9ae06fff9d37bf319f3"
 
 st.set_page_config(page_title="MLflow Wine Quality App", page_icon="🍷")
 
